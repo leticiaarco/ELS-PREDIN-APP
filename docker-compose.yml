@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    image: early-school-leaving:latest
+    container_name: esl_container
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_DEBUG=false
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      - ollama
+    volumes:
+      - ./uploads:/app/uploads
+      - ./Results:/app/Results
+      - ./PredictionResults:/app/PredictionResults
+      - ./per_country_results:/app/per_country_results
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama_container
+    #ports:
+      #- "11434:11434"
+    volumes:
+      - ./entrypoint.sh:/entrypoint.sh
+      - ollama_storage:/root/.ollama
+    entrypoint: ["/bin/bash", "/entrypoint.sh"]
+    restart: unless-stopped
+
+volumes:
+  ollama_storage:

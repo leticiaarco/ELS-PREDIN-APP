@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>ESL Insight Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+    <style>
+         :root {
+            --sidebar-width: 280px;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --secondary-gradient: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            --danger-gradient: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            --bg-dark: #0f172a;
+            --bg-light: #f8fafc;
+            --bg-card: #ffffff;
+            --text-dark: #0f172a;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1e5ff 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        #sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: linear-gradient(180deg, #ffffff 0%, #f9f5ff 100%);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        main {
+            margin-left: var(--sidebar-width);
+            padding: 3rem 2.5rem;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .kpi-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+            border-color: #d0d5dd;
+        }
+        
+        .kpi-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-gradient);
+        }
+        
+        .kpi-card.danger::before {
+            background: var(--danger-gradient);
+        }
+        
+        .kpi-card.success::before {
+            background: var(--success-gradient);
+        }
+        
+        .kpi-card::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .kpi-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .kpi-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        
+        .kpi-value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .kpi-card.danger .kpi-value {
+            background: var(--danger-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .kpi-card.success .kpi-value {
+            background: var(--success-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .kpi-subtitle {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        
+        .chart-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .chart-description {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .chart-hint {
+            margin-top: 1rem;
+            padding: 0.85rem 1.1rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+            border-left: 4px solid #6366f1;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            color: #475569;
+            line-height: 1.55;
+        }
+
+        .chart-hint strong {
+            color: #4f46e5;
+        }
+        
+        .filter-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-bottom: 0.6rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+        
+        .form-select {
+            border-radius: 12px;
+            border: 1.5px solid var(--border-color);
+            padding: 0.8rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            background-color: var(--bg-card);
+            transition: all 0.3s ease;
+        }
+        
+        .form-select:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            outline: none;
+        }
+        
+        .form-select:hover {
+            border-color: #b0b9c3;
+        }
+        
+        .btn-dark {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 0.9rem 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+        
+        .btn-dark:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.4);
+            color: white;
+        }
+        
+        .btn-dark:active {
+            transform: translateY(0);
+        }
+        
+        .rounded-pill {
+            border-radius: 25px !important;
+        }
+        
+        .stai-face-inline {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 8px;
+            border-radius: 14px;
+            margin-right: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .title-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .title-container h4 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+        
+        @media (max-width: 1200px) {
+            .kpi-row {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside id="sidebar">
+        <div class="title-container">
+            <img src="{{ url_for('static', filename='images/stai_logo_face.png') }}" alt="STAI Face" class="stai-face-inline">
+            <h4 class="fw-bold mb-0 text-primary">ESL Insights</h4>
+        </div>
+        <a href="/" class="btn btn-outline-secondary btn-sm mb-3">← Home</a>
+
+
+    </aside>
+
+    <main>
+        <div class="kpi-row">
+            <div class="kpi-card">
+                <div class="kpi-content">
+                    <div class="kpi-label">👥 Total Students</div>
+                    <div id="kpi-total" class="kpi-value">-</div>
+                </div>
+            </div>
+            <div class="kpi-card danger">
+                <div class="kpi-content">
+                    <div class="kpi-label">⚠️ Dropout Count</div>
+                    <div id="kpi-dropout" class="kpi-value">-</div>
+                    <div id="kpi-dropout-pct" class="kpi-subtitle"></div>
+                </div>
+            </div>
+            <div class="kpi-card success">
+                <div class="kpi-content">
+                    <div class="kpi-label">✅ Enrolled Status</div>
+                    <div id="kpi-enroll" class="kpi-value">-</div>
+                    <div id="kpi-enroll-pct" class="kpi-subtitle"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-lg-12">
+                <div class="glass-card">
+                    <h5 class="chart-title">Top Risk Segments</h5>
+                    <p class="chart-description">Highest dropout risk groups automatically detected across all features</p>
+                    <div id="chart-risk-segments" style="height:340px;"></div>
+                    <div class="chart-hint">
+                        <strong>How to read this chart:</strong> Each bar shows a student group labeled as <em>Feature → Value</em> (e.g. <em>School Track → Vocational</em>). The bar length is the dropout rate for that group. Labels also show the raw count (dropouts / total). Colours: <span style="color:#ef4444;font-weight:600;">Red</span> = high risk, <span style="color:#f97316;font-weight:600;">Orange</span> = medium risk, <span style="color:#10b981;font-weight:600;">Green</span> = low risk.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-lg-12">
+                <div class="glass-card">
+                    <h5 class="chart-title">Distribution Overview</h5>
+                    <p class="chart-description">Explore dropout rates across different features</p>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="filter-label">📌 Select Feature</label>
+                            <select id="distribution-feature" class="form-select">
+                                <option value="">Loading...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="chart-distribution" style="height:340px;"></div>
+                    <div id="hint-distribution" class="chart-hint">
+                        <strong>How to read this chart:</strong> Select a feature above to see the dropout rate at each of its values. Each bar shows the percentage of students with that value who dropped out.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4" style="display:none;">
+            <div class="col-lg-12">
+                <div class="glass-card">
+                    <h5 class="chart-title">Contribution Chart</h5>
+                    <p class="chart-description">See which categories drive the most dropouts - top contribution to total</p>
+                    <div id="chart-contribution" style="height:400px;"></div>
+                    <div class="chart-hint">
+                        <strong>How to read this chart:</strong> This chart shows which groups contribute the largest <em>number</em> (not rate) of dropouts to the overall total. A group can have a low dropout rate but still appear here if it contains many students. Use it to identify where intervention efforts would reach the most at-risk students.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h5 class="chart-title">Custom Analysis</h5>
+            <p class="chart-description">Build your own insights by selecting any feature and metric combination</p>
+            <div class="row g-3 align-items-end mb-4">
+                <div class="col-md-3">
+                    <label class="filter-label">Feature (X-Axis)</label>
+                    <select id="custom-x" class="form-select"></select>
+                </div>
+                <div class="col-md-3">
+                    <label class="filter-label">Metric (Y-Axis)</label>
+                    <select id="custom-metric" class="form-select">
+                        <option value="student_count">Total Population</option>
+                        <option value="dropout_count">Dropout Count</option>
+                        <option value="enroll_count">Enrolled Count</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="filter-label">Chart Type</label>
+                    <select id="custom-type" class="form-select">
+                        <option value="bar">Bar Chart</option>
+                        <option value="pie">Donut Chart</option>
+                        <option value="scatter">Area Chart</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button id="btn-update-custom" class="btn btn-dark w-100 rounded-pill">✨ Generate</button>
+                </div>
+            </div>
+            <div id="chart-custom" style="height: 420px;" class="mt-4"></div>
+        </div>
+    </main>
+
+    <script>
+        const COLORS = {
+            dropout: '#ef4444',
+            enroll: '#10b981',
+            main: '#6366f1',
+            purple: '#a855f7',
+            pink: '#ec4899',
+            orange: '#f97316',
+            cyan: '#06b6d4'
+        };
+
+        const PLOTLY_CONFIG = {
+            responsive: true,
+            displayModeBar: false,
+            toImageButtonOptions: {
+                format: 'png',
+                filename: 'chart'
+            }
+        };
+
+        async function fetchJSON(url, body = null) {
+            const options = body ? {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            } : {
+                method: 'GET'
+            };
+            const res = await fetch(url, options);
+            return res.json();
+        }
+
+        function getFilters() {
+            return {
+                gender: [],
+                age: [],
+                field: []
+            };
+        }
+
+        async function updateDashboard() {
+            const f = {
+                filters: getFilters()
+            };
+            const kpi = await fetchJSON("/api/kpis", f);
+
+            document.getElementById("kpi-total").innerText = kpi.total_students.toLocaleString();
+            document.getElementById("kpi-dropout").innerText = kpi.dropout_count.toLocaleString();
+            document.getElementById("kpi-enroll").innerText = kpi.enroll_count.toLocaleString();
+            document.getElementById("kpi-dropout-pct").innerText = `↘ ${kpi.dropout_pct}% of Total`;
+            document.getElementById("kpi-enroll-pct").innerText = `↗ ${kpi.enroll_pct}% of Total`;
+
+            const segments = await fetchJSON("/api/top_risk_segments", f);
+            loadRiskSegments(segments);
+
+            const firstFeature = document.getElementById("distribution-feature").value;
+            if (firstFeature) {
+                updateDistributionChart(firstFeature, f.filters);
+            }
+
+            // Contribution chart disabled
+
+            updateCustomChart();
+        }
+
+
+        async function loadRiskSegments(data) {
+            const segments = data.segments || [];
+            if (segments.length === 0) {
+                document.getElementById("chart-risk-segments").innerHTML =
+                    `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#64748b;font-size:0.95rem;">No data available.</div>`;
+                return;
+            }
+
+            // Build readable labels: "Feature Name → Value"
+            const labels = segments.map(s => {
+                const feat = s.column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                return `${feat} → ${s.value}`;
+            });
+            const rates = segments.map(s => s.dropout_rate);
+            const dropoutCounts = segments.map(s => s.dropout_count);
+            const totalCounts = segments.map(s => s.total_count);
+
+            // Dynamic left margin based on longest label
+            const maxLabelLen = Math.max(...labels.map(l => l.length));
+            const leftMargin = Math.min(Math.max(maxLabelLen * 7, 180), 380);
+            const rightMargin = Math.max(...rates.map(r => r.toFixed(1).length)) * 10 + 120;
+
+            const trace = {
+                x: rates,
+                y: labels,
+                type: 'bar',
+                orientation: 'h',
+                marker: {
+                    color: rates.map(r => {
+                        if (r > 18) return '#ef4444';
+                        if (r > 12) return '#f97316';
+                        return '#10b981';
+                    }),
+                    line: { color: 'rgba(0,0,0,0.1)', width: 1 }
+                },
+                customdata: segments.map(s => [s.dropout_count, s.total_count]),
+                text: rates.map((r, i) => `<b>${r.toFixed(1)}%</b>  (${dropoutCounts[i]} / ${totalCounts[i]})`),
+                textposition: 'outside',
+                cliponaxis: false,
+                hovertemplate:
+                    '<b>%{y}</b><br>' +
+                    'Dropout rate: <b>%{x:.1f}%</b><br>' +
+                    'Dropouts: %{customdata[0]} of %{customdata[1]} students' +
+                    '<extra></extra>'
+            };
+
+            // Chart height scales with number of segments
+            const chartHeight = Math.max(300, segments.length * 60 + 80);
+            document.getElementById("chart-risk-segments").style.height = chartHeight + 'px';
+
+            Plotly.newPlot("chart-risk-segments", [trace], {
+                margin: { t: 20, b: 50, l: leftMargin, r: rightMargin },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                xaxis: {
+                    title: "<b>Dropout Rate (%)</b>",
+                    titlefont: { size: 13, color: '#475569' },
+                    gridcolor: 'rgba(0,0,0,0.05)',
+                    zeroline: false,
+                    range: [0, Math.max(...rates) * 1.35]
+                },
+                yaxis: { automargin: true },
+                font: { family: 'Inter, sans-serif', color: '#64748b' }
+            }, PLOTLY_CONFIG);
+        }
+
+        async function updateDistributionChart(feature, filters) {
+            const payload = {
+                feature: feature,
+                filters: filters
+            };
+            const d = await fetchJSON("/api/distribution_overview", payload);
+
+            const dropoutCounts = d.dropout || [];
+            const enrollCounts = d.enroll || [];
+            const totalCounts = dropoutCounts.map((v, i) => v + (enrollCounts[i] || 0));
+
+            const trace = {
+                x: d.labels,
+                y: d.rates,
+                type: 'bar',
+                marker: {
+                    color: d.rates.map(r => {
+                        if (r > 18) return '#ef4444';
+                        if (r > 12) return '#f97316';
+                        return '#10b981';
+                    }),
+                    line: {
+                        color: 'rgba(0, 0, 0, 0.1)',
+                        width: 1
+                    }
+                },
+                customdata: dropoutCounts.map((dc, i) => [dc, totalCounts[i]]),
+                text: d.rates.map((r, i) => `${r.toFixed(1)}% (${dropoutCounts[i]}/${totalCounts[i]})`),
+                textposition: 'outside',
+                hovertemplate:
+                    '<b>%{x}</b><br>' +
+                    'Dropout rate: %{y:.1f}%<br>' +
+                    'Dropouts: %{customdata[0]} of %{customdata[1]} students' +
+                    '<extra></extra>'
+            };
+
+            const hint = document.getElementById("hint-distribution");
+            if (hint) {
+                const cleanFeature = String(feature).replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                hint.innerHTML = `<strong>How to read this chart:</strong> This chart shows the dropout rate at each value of the <strong>${cleanFeature}</strong> variable. Each bar represents one value of <em>${cleanFeature}</em>; the height shows the percentage of students with that value who dropped out. <strong style="color: #ef4444;">Red</strong> indicates high risk, <strong style="color: #f97316;">Orange</strong> indicates medium risk, and <strong style="color: #10b981;">Green</strong> indicates low risk.`;
+            }
+
+            // Dynamic margins based on label lengths
+            const maxXLabelLen = Math.max(...(d.labels || ['']).map(l => String(l).length));
+            const bottomMargin = maxXLabelLen > 12 ? 120 : 80;
+            const rightMargin = 40;
+
+            Plotly.newPlot("chart-distribution", [trace], {
+                margin: { t: 20, b: bottomMargin, l: 70, r: rightMargin },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                xaxis: {
+                    title: `<b>${feature.replace(/_/g,' ')}</b>`,
+                    titlefont: { size: 13, color: '#475569' },
+                    tickangle: maxXLabelLen > 8 ? -40 : 0,
+                    automargin: true,
+                    gridcolor: 'rgba(0,0,0,0.05)'
+                },
+                yaxis: {
+                    title: '<b>Dropout Rate (%)</b>',
+                    titlefont: { size: 13, color: '#475569' },
+                    gridcolor: 'rgba(0,0,0,0.05)',
+                    zeroline: false,
+                    range: [0, Math.max(...(d.rates || [0])) * 1.3]
+                },
+                font: { family: 'Inter, sans-serif', color: '#64748b' }
+            }, PLOTLY_CONFIG);
+        }
+
+        async function loadContributionChart(data) {
+            const containerEl = document.getElementById("chart-contribution");
+
+            if (!data || data.error || !data.fields || data.fields.length === 0) {
+                const msg = (data && data.error)
+                    ? `Contribution chart unavailable: ${data.error}. Make sure the "field" column is configured in the schema.`
+                    : "No data available for the contribution chart.";
+                containerEl.innerHTML = `
+                    <div style="display:flex; align-items:center; justify-content:center;
+                                height:100%; padding:1.5rem; color:#64748b;
+                                font-size:0.95rem; text-align:center;">
+                        ${msg}
+                    </div>`;
+                return;
+            }
+
+            const percentages = data.contribution_pct;
+
+            // Dynamic left margin based on longest field label
+            const maxFieldLen = Math.max(...data.fields.map(f => String(f).length));
+            const leftMargin = Math.min(Math.max(maxFieldLen * 7, 160), 400);
+            const rightMargin = 120;
+
+            const trace = {
+                x: percentages,
+                y: data.fields,
+                type: 'bar',
+                orientation: 'h',
+                marker: {
+                    color: percentages.map(p => {
+                        if (p > 15) return '#ef4444';
+                        if (p > 10) return '#f97316';
+                        if (p > 5) return '#eab308';
+                        return '#8b5cf6';
+                    }),
+                    line: { color: 'rgba(0, 0, 0, 0.1)', width: 1 }
+                },
+                text: percentages.map(p => `<b>${p.toFixed(1)}%</b>`),
+                textposition: 'outside',
+                cliponaxis: false,
+                hovertemplate: '<b>%{y}</b><br>Dropout rate: %{x:.1f}%<extra></extra>'
+            };
+
+            Plotly.newPlot("chart-contribution", [trace], {
+                margin: { t: 20, b: 40, l: leftMargin, r: rightMargin },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                xaxis: {
+                    title: '<b>Dropout Rate within Group (%)</b>',
+                    titlefont: { size: 13, color: '#475569' },
+                    gridcolor: 'rgba(0,0,0,0.05)',
+                    zeroline: false,
+                    range: [0, Math.max(...percentages) * 1.3]
+                },
+                yaxis: { automargin: true },
+                font: { family: 'Inter, sans-serif', color: '#64748b' }
+            }, PLOTLY_CONFIG);
+        }
+
+        async function updateCustomChart() {
+            const xSel = document.getElementById("custom-x");
+            const metricSel = document.getElementById("custom-metric");
+            const typeSel = document.getElementById("custom-type");
+
+            const payload = {
+                x_axis: xSel.value,
+                metric: metricSel.value,
+                chart_type: typeSel.value,
+                filters: getFilters()
+            };
+
+            const d = await fetchJSON("/api/custom_chart", payload);
+            if (!d.dropout) return;
+
+            const metric = metricSel.value;
+            const chartType = typeSel.value;
+            const xLabel = xSel.options[xSel.selectedIndex]?.text || "the selected feature";
+            const metricLabel = metricSel.options[metricSel.selectedIndex]?.text || "Value";
+
+            // Resolve the values to plot from the chosen metric
+            const dropoutVals = d.dropout;
+            const enrollVals = d.enroll;
+            const totalVals = dropoutVals.map((v, i) => v + enrollVals[i]);
+
+            let yValues;
+            if (metric === "dropout_count") yValues = dropoutVals;
+            else if (metric === "enroll_count") yValues = enrollVals;
+            else yValues = totalVals; // student_count / total population
+
+            const riskColors = dropoutVals.map((drop, i) => {
+                const total = totalVals[i];
+                const rate = total > 0 ? (drop / total) * 100 : 0;
+                if (rate > 18) return '#ef4444';
+                if (rate > 12) return '#f97316';
+                return '#10b981';
+            });
+
+            // Dynamic margins based on x-axis label lengths
+            const maxXLen = Math.max(...(d.x || ['']).map(l => String(l).length));
+            const dynBottom = maxXLen > 12 ? 130 : maxXLen > 8 ? 90 : 60;
+            const dynRight  = 80;
+
+            const baseLayout = {
+                margin: { t: 30, b: dynBottom, l: 70, r: dynRight },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { family: 'Inter, sans-serif', color: '#64748b' },
+                showlegend: false
+            };
+
+            let traces = [];
+            let layout = { ...baseLayout };
+
+            if (chartType === "pie") {
+                // Donut chart: one slice per value of the selected feature
+                const grandTotal = yValues.reduce((a, b) => a + b, 0) || 1;
+                traces = [{
+                    labels: d.x,
+                    values: yValues,
+                    type: 'pie',
+                    hole: 0.55,
+                    marker: {
+                        colors: [
+                            '#6366f1', '#a855f7', '#ec4899', '#f97316',
+                            '#eab308', '#10b981', '#06b6d4', '#ef4444',
+                            '#8b5cf6', '#14b8a6'
+                        ]
+                    },
+                    customdata: yValues.map(v => [v, (v / grandTotal * 100).toFixed(1)]),
+                    texttemplate: '%{label}<br>%{customdata[1]}% (%{customdata[0]})',
+                    textposition: 'outside',
+                    hovertemplate: `<b>%{label}</b><br>${metricLabel}: %{customdata[0]}<br>Share: %{customdata[1]}%<extra></extra>`
+                }];
+                layout = {
+                    ...baseLayout,
+                    showlegend: false,
+                    margin: { t: 30, b: 30, l: 30, r: 30 }
+                };
+            } else if (chartType === "scatter") {
+                // Area chart (filled line) for the chosen metric
+                const ratePct = dropoutVals.map((dc, i) => {
+                    const t = totalVals[i];
+                    return t > 0 ? (dc / t * 100) : 0;
+                });
+                traces = [{
+                    x: d.x,
+                    y: yValues,
+                    name: metricLabel,
+                    type: 'scatter',
+                    mode: 'lines+markers+text',
+                    fill: 'tozeroy',
+                    line: { color: '#6366f1', width: 3, shape: 'spline' },
+                    marker: { size: 8, color: '#6366f1' },
+                    fillcolor: 'rgba(99, 102, 241, 0.2)',
+                    customdata: ratePct.map((r, i) => [r.toFixed(1), totalVals[i]]),
+                    text: yValues.map((v, i) => `${v} (${ratePct[i].toFixed(1)}%)`),
+                    textposition: 'top center',
+                    hovertemplate:
+                        `<b>%{x}</b><br>${metricLabel}: %{y}<br>` +
+                        'Dropout rate: %{customdata[0]}%<br>' +
+                        'Total students: %{customdata[1]}<extra></extra>'
+                }];
+                layout = {
+                    ...baseLayout,
+                    xaxis: { tickangle: maxXLen > 8 ? -40 : 0, automargin: true, gridcolor: 'rgba(0,0,0,0.05)' },
+                    yaxis: { title: `<b>${metricLabel}</b>`, gridcolor: 'rgba(0,0,0,0.05)' }
+                };
+            } else {
+                // Default: bar chart
+                if (metric === "student_count") {
+                    // For total population, show total, dropout vs enroll side-by-side with risk-based coloring
+                    const ratePct = dropoutVals.map((dc, i) => {
+                        const t = totalVals[i];
+                        return t > 0 ? (dc / t * 100) : 0;
+                    });
+                    
+                    // Use fixed blue color for Enrolled bar to contrast with Dropout (red/orange/green)
+                    const enrollRiskColors = enrollVals.map(() => '#3b82f6');  // Solid blue for all enrolled bars
+                    
+                    traces = [
+                        {
+                            x: d.x,
+                            y: totalVals,
+                            name: 'Total Population',
+                            type: 'bar',
+                            marker: { color: '#9ca3af', opacity: 0.6 },
+                            customdata: totalVals.map((v, i) => [v, ratePct[i].toFixed(1)]),
+                            text: totalVals.map((v, i) => `${v}`),
+                            textposition: 'outside',
+                            cliponaxis: false,
+                            hovertemplate:
+                                '<b>%{x}</b><br>' +
+                                'Total Students: %{customdata[0]}<br>' +
+                                'Dropout Rate: %{customdata[1]}%<extra></extra>'
+                        },
+                        {
+                            x: d.x,
+                            y: dropoutVals,
+                            name: 'Dropout',
+                            type: 'bar',
+                            marker: { color: riskColors },
+                            customdata: dropoutVals.map((v, i) => [v, ratePct[i].toFixed(1), totalVals[i]]),
+                            text: dropoutVals.map((v, i) => `${v} (${ratePct[i].toFixed(1)}%)`),
+                            textposition: 'outside',
+                            cliponaxis: false,
+                            hovertemplate:
+                                '<b>%{x}</b><br>' +
+                                'Dropouts: %{customdata[0]} of %{customdata[2]}<br>' +
+                                'Dropout rate: %{customdata[1]}%<extra></extra>'
+                        },
+                        {
+                            x: d.x,
+                            y: enrollVals,
+                            name: 'Enrolled',
+                            type: 'bar',
+                            marker: { color: enrollRiskColors },
+                            customdata: enrollVals.map((v, i) => {
+                                const t = totalVals[i];
+                                const pct = t > 0 ? (v / t * 100) : 0;
+                                return [v, pct.toFixed(1), t, ratePct[i].toFixed(1)];
+                            }),
+                            text: enrollVals.map((v, i) => {
+                                const t = totalVals[i];
+                                const pct = t > 0 ? (v / t * 100) : 0;
+                                return `${v} (${pct.toFixed(1)}%)`;
+                            }),
+                            textposition: 'outside',
+                            cliponaxis: false,
+                            hovertemplate:
+                                '<b>%{x}</b><br>' +
+                                'Enrolled: %{customdata[0]} of %{customdata[2]}<br>' +
+                                'Enrollment rate: %{customdata[1]}%<br>' +
+                                'Dropout rate (risk): %{customdata[3]}%<extra></extra>'
+                        }
+                    ];
+                } else {
+                    const singleColor = metric === "dropout_count" ? riskColors : 
+                        dropoutVals.map((drop, i) => {
+                            const total = totalVals[i];
+                            const rate = total > 0 ? (drop / total) * 100 : 0;
+                            if (rate > 18) return '#ef4444';  // Red for high dropout rate
+                            if (rate > 12) return '#f97316';  // Orange for medium
+                            return '#10b981';  // Green for low dropout rate
+                        });
+                    const grandTotal = yValues.reduce((a, b) => a + b, 0) || 1;
+                    traces = [{
+                        x: d.x,
+                        y: yValues,
+                        name: metricLabel,
+                        type: 'bar',
+                        marker: { color: singleColor },
+                        customdata: yValues.map(v => [v, (v / grandTotal * 100).toFixed(1)]),
+                        text: yValues.map(v => `${v} (${(v / grandTotal * 100).toFixed(1)}%)`),
+                        textposition: 'outside',
+                        cliponaxis: false,
+                        hovertemplate:
+                            `<b>%{x}</b><br>${metricLabel}: %{customdata[0]}<br>` +
+                            'Share of total: %{customdata[1]}%<extra></extra>'
+                    }];
+                }
+                layout = {
+                    ...baseLayout,
+                    barmode: 'group',
+                    xaxis: { tickangle: maxXLen > 8 ? -40 : 0, automargin: true },
+                    yaxis: { title: `<b>${metricLabel}</b>` },
+                };
+            }
+
+            Plotly.newPlot("chart-custom", traces, layout, PLOTLY_CONFIG);
+
+        }
+
+        async function loadPlotlyChart(url, id, payload, traceGen, layout = {}) {
+            const d = await fetchJSON(url, payload);
+            Plotly.newPlot(id, traceGen(d), {
+                margin: {
+                    t: 10,
+                    b: 40,
+                    l: 50,
+                    r: 10
+                },
+                legend: {
+                    orientation: 'h',
+                    y: -0.3
+                },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                ...layout
+            }, {
+                responsive: true,
+                displayModeBar: false
+            });
+        }
+
+        document.getElementById("btn-update-custom").onclick = updateCustomChart;
+
+        document.addEventListener("DOMContentLoaded", async() => {
+            const meta = await fetchJSON("/api/explore_metadata");
+
+            if (meta.error) {
+                alert("Error: " + meta.error + "\n\nPlease upload a dataset and configure the schema first.");
+                window.location.href = "/upload";
+                return;
+            }
+
+            const xSelect = document.getElementById("custom-x");
+            const distSelect = document.getElementById("distribution-feature");
+
+            meta.x_axis_columns.forEach(col => {
+                if (col !== 'belgian_nonbelgian' && col !== 'eu_noneu') {
+                    const cleanName = col.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    xSelect.add(new Option(cleanName, col));
+                    distSelect.add(new Option(cleanName, col));
+                }
+            });
+
+            if (distSelect.options.length > 0) {
+                distSelect.value = distSelect.options[0].value;
+                distSelect.onchange = () => updateDistributionChart(distSelect.value, getFilters());
+            }
+
+            updateDashboard();
+        });
+    </script>
+</body>
+
+</html>

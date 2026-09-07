@@ -1,0 +1,154 @@
+{
+  "dataset": {
+    "dataset_id": "",
+    "creator": "",
+    "country": "",
+    "description": "",
+    "date_created": "",
+
+    "objective_feature": {
+      "feature_id": "dropout_risk",
+      "feature_name": "Dropout Risk",
+      "feature_description": "Target label indicating whether a student is at risk of early school leaving.",
+      "feature_domain": "categorical",
+      "categorical_values": ["yes", "no"]
+    },
+
+    "predictive_features": [
+      {
+        "feature_id": "risk_neighborhood",
+        "feature_name": "Risk Characteristic: Neighborhood",
+        "feature_description": "Indicates whether the student's neighborhood is classified as high-risk.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "risk_home_language",
+        "feature_name": "Risk Characteristic: Home Language",
+        "feature_description": "Indicates whether the language spoken at home is considered a risk factor.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "risk_mother_education",
+        "feature_name": "Risk Characteristic: Mother's Education",
+        "feature_description": "Indicates whether mother's education level triggers a risk condition.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "risk_school_allowance",
+        "feature_name": "Risk Characteristic: School Allowance",
+        "feature_description": "Indicates whether the student receives school allowance, used as a risk indicator.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+
+      {
+        "feature_id": "grade_year_secondary",
+        "feature_name": "Grade Year Secondary",
+        "feature_description": "The student’s current grade/year in secondary school.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "outflow_position",
+        "feature_name": "Outflow Position",
+        "feature_description": "Type of educational outflow such as TSO, BSO, KSO, etc.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "gender",
+        "feature_name": "Gender",
+        "feature_description": "Gender of the student.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "nationality_group",
+        "feature_name": "Belgian / Non-Belgian",
+        "feature_description": "Indicates whether the student is Belgian or non-Belgian.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "eu_status",
+        "feature_name": "EU / Non-EU Status",
+        "feature_description": "Indicates whether the student originates from an EU or non-EU member state.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "age_category",
+        "feature_name": "Age Category",
+        "feature_description": "Age group of the student.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "household_language_dutch",
+        "feature_name": "Household Language Dutch",
+        "feature_description": "Indicates Dutch language exposure within the household.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "mother_education",
+        "feature_name": "Mother Education Level",
+        "feature_description": "Highest education level attained by the student's mother.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "school_progress",
+        "feature_name": "School Progress",
+        "feature_description": "Indicates whether the student has academic delays or progresses normally.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "grade_secondary_education",
+        "feature_name": "Grade Secondary Education",
+        "feature_description": "Exact grade position of the student in secondary education.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "school_year_level",
+        "feature_name": "School Year Level",
+        "feature_description": "Numeric representation of the student’s year in school.",
+        "feature_domain": "numeric",
+        "categorical_values": null
+      },
+      {
+        "feature_id": "field_of_study",
+        "feature_name": "Field of Study",
+        "feature_description": "The student's academic study field.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "municipality",
+        "feature_name": "Residence Municipality",
+        "feature_description": "Merged municipality where the student resides.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "province",
+        "feature_name": "Residence Province",
+        "feature_description": "Province where the student resides.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      },
+      {
+        "feature_id": "central_city",
+        "feature_name": "Residence Central City",
+        "feature_description": "Indicates whether the residence belongs to a central metropolitan area.",
+        "feature_domain": "categorical",
+        "categorical_values": []
+      }
+    ]
+  }
+}

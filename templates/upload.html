@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Upload & Schema Mapping</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f7f9fc;
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Card */
+        
+        .schema-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        /* Title */
+        
+        .schema-title {
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        /* Upload Box */
+        
+        .upload-box {
+            border: 2px dashed #007bff;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .upload-box:hover {
+            background: #f0f7ff;
+        }
+        /* Select */
+        
+        .schema-select {
+            border-radius: 12px;
+            padding: 10px;
+        }
+        /* Button */
+        
+        .btn-primary {
+            border-radius: 50px;
+            padding: 12px 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+
+        <div class="schema-card">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="schema-title mb-0">Upload Dataset </h3>
+                <a href="/" class="btn btn-outline-secondary btn-sm">← Home</a>
+            </div>
+
+            <!-- Upload -->
+            <div class="upload-box mb-4" onclick="document.getElementById('fileInput').click()">
+                <p class="mb-0">Click to upload CSV file</p>
+                <input type="file" id="fileInput" hidden>
+            </div>
+
+            <div id="file-name" class="text-muted mb-3"></div>
+
+            <!-- Schema Form -->
+            <form id="schema-form" method="POST" action="/save-schema" style="display:none;">
+
+                <div class="row g-3">
+
+                    <div class="col-md-12">
+                        <label class="fw-semibold">Select the column that shows each student's final status (Dropped Out or Enrolled)</label>
+                        <select name="target_col" id="target_col" class="form-select schema-select mt-1"></select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Dropout Value</label>
+                        <select name="dropout_value" id="dropout_value" class="form-select schema-select"></select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Enroll Value</label>
+                        <select name="enroll_value" id="enroll_value" class="form-select schema-select"></select>
+                    </div>
+
+                </div>
+
+                <input type="hidden" name="action" value="explore">
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">
+                    Continue to Explore →
+                </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script>
+        let datasetId = null;
+
+        // Upload file
+        document.getElementById("fileInput").addEventListener("change", async function() {
+            const file = this.files[0];
+            if (!file) return;
+
+            document.getElementById("file-name").innerText = "Uploading: " + file.name;
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const res = await fetch("/api/datasets/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await res.json();
+
+            datasetId = data.dataset_id;
+
+            populateDropdowns(data.columns);
+
+            document.getElementById("schema-form").style.display = "block";
+        });
+
+        document.getElementById("target_col").addEventListener("change", async function() {
+            const targetCol = this.value;
+
+            if (!datasetId || !targetCol) return;
+
+            const res = await fetch("/api/target-values", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    dataset_id: datasetId,
+                    target_col: targetCol
+                })
+            });
+
+            const data = await res.json();
+
+            const dropoutSelect = document.getElementById("dropout_value");
+            const enrollSelect = document.getElementById("enroll_value");
+
+            dropoutSelect.innerHTML = "";
+            enrollSelect.innerHTML = "";
+
+            data.values.forEach(val => {
+                dropoutSelect.add(new Option(val, val));
+                enrollSelect.add(new Option(val, val));
+            });
+        });
+
+        // Fill dropdowns
+        function populateDropdowns(columns) {
+            const select = document.getElementById("target_col");
+            select.innerHTML = "";
+            columns.forEach(col => {
+                const option = document.createElement("option");
+                option.value = col;
+                option.textContent = col;
+                select.appendChild(option);
+            });
+            // Default to last column — most users place target at the end
+            select.value = columns[columns.length - 1];
+            select.dispatchEvent(new Event("change"));
+        }
+    </script>
+
+</body>
+
+</html>

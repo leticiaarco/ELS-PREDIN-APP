@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESL-PREDIN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Header */
+        
+        .brand-header {
+            padding: 40px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .stai-face-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            background: white;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-top: -90px;
+        }
+        
+        .heading-group h1 {
+            font-weight: 800;
+            color: #1a1a1a;
+            margin: 0;
+            line-height: 1.1;
+            font-size: 2.8rem;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            color: #555;
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
+        /* Buttons */
+        
+        .btn-cta {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 40px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-cta:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        }
+        /* Main Cards */
+        
+        .card {
+            border: 1px solid #d1d9e0;
+            border-radius: 25px;
+            height: 440px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            background-color: white;
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 123, 255, 0.15);
+        }
+        
+        .card img {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto;
+            object-fit: contain;
+        }
+        
+        .card-title {
+            font-weight: 700;
+            color: #007bff;
+            margin-top: 15px;
+        }
+        
+        .btn-secondary-card {
+            background-color: transparent;
+            color: #007bff;
+            border: 2px solid #007bff;
+            border-radius: 50px;
+            padding: 8px 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        
+        .btn-secondary-card:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        /* --- Dynamic Side Panel --- */
+        
+        @keyframes bounce {
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(0);
+            }
+            40% {
+                transform: translateX(-10px);
+            }
+            60% {
+                transform: translateX(-5px);
+            }
+        }
+        
+        .side-train-panel {
+            position: fixed;
+            top: 150px;
+            right: 0;
+            width: 50px;
+            /* collapsed width */
+            background-color: #007bff;
+            /* matches system theme */
+            color: white;
+            border-radius: 15px 0 0 15px;
+            box-shadow: -4px 4px 25px rgba(0, 0, 0, 0.2);
+            padding: 10px 5px;
+            text-align: center;
+            z-index: 999;
+            overflow: hidden;
+            transition: width 0.3s ease, padding 0.3s ease;
+            animation: bounce 1s ease-out 0.5s;
+            /* subtle bounce on load */
+        }
+        
+        .side-train-panel:hover {
+            width: 220px;
+            /* expanded width */
+            padding: 20px;
+        }
+        
+        .side-train-panel img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .side-train-panel:hover img {
+            transform: scale(1.1);
+        }
+        
+        .side-train-panel h6,
+        .side-train-panel p,
+        .side-train-panel .btn-secondary-card {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .side-train-panel:hover h6,
+        .side-train-panel:hover p,
+        .side-train-panel:hover .btn-secondary-card {
+            opacity: 1;
+        }
+        
+        .side-train-panel h6 {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        .side-train-panel p {
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+        /* Footer */
+        
+        .eu-footer {
+            background: #ffffff;
+            border-top: 1px solid #e0e0e0;
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+        
+        .footer-logo-eu {
+            height: 45px;
+            width: auto;
+        }
+        
+        .footer-logo-stai {
+            height: 65px;
+            width: auto;
+        }
+        
+        .footer-logo-vub {
+            height: 40px;
+            width: auto;
+        }
+        
+        .eu-text {
+            font-size: 0.85rem;
+            color: #444;
+            font-weight: 600;
+            line-height: 1.2;
+            max-width: 180px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="brand-header">
+            <img src="{{ url_for('static', filename='images/stai_logo_face.png') }}" alt="STAI Face Logo" class="stai-face-logo">
+            <div class="heading-group">
+                <h1>Welcome to the Early<br>School Leaving Prediction & Insights System</h1>
+                <p class="subtitle">Empowering educators with proactive, data-driven insights</p>
+                <div>
+                    <a href="/upload" class="btn btn-cta">Get Started &rarr;</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Cards Row -->
+        <div class="row justify-content-center g-4 mt-2">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/dropout.png') }}" alt="Risk Prediction Icon">
+                    <div>
+                        <h5 class="card-title">Early Risk Prediction</h5>
+                        <p class="card-text text-muted">Instantly identify students who may need extra support. Enter student details to see their progress.</p>
+                    </div>
+                    <div>
+                        <a href="/predict" class="btn btn-secondary-card">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/data_explore.png') }}" alt="Data Exploration Icon">
+                    <div>
+                        <h5 class="card-title">Data Exploration</h5>
+                        <p class="card-text text-muted">View clear charts and summaries of your school's data. Easily see which groups are doing well.</p>
+                    </div>
+                    <div>
+                        <a href="/upload" class="btn btn-secondary-card">View Demo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collapsible Side Panel with Bounce -->
+    <a href="{{ url_for('train') }}" class="side-train-panel">
+        <img src="{{ url_for('static', filename='images/training.png') }}" alt="Train Icon">
+        <h6>Model Training</h6>
+        <p>Update predictions using your latest school data.</p>
+        <span class="btn btn-secondary-card">Configure</span>
+    </a>
+
+    <footer class="eu-footer">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 d-flex align-items-center justify-content-center justify-content-md-start mb-4 mb-md-0">
+                    <img src="{{ url_for('static', filename='images/eu_cofunded.png') }}" alt="EU Co-funded" class="footer-logo-eu me-3">
+                    <span class="eu-text"></span>
+                </div>
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <img src="{{ url_for('static', filename='images/stai_logo.png') }}" alt="STAI Project" class="footer-logo-stai">
+                </div>
+                <div class="col-md-4 d-flex justify-content-center justify-content-md-end">
+                    <img src="{{ url_for('static', filename='images/VUB-AI_RGB.png') }}" alt="VUB AI Lab" class="footer-logo-vub">
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
