@@ -1,0 +1,17 @@
+birth_country,gender,nacionality,distance_home_school,age,state_support,responsible_person,education_responsible_person,father_employment_status,father_education_level,mother_employment_status,mother_education_level,status
+Serbia,Male,Ukrainian,18,7,No,Mother,Primary,Unemployed,Primary,Unemployed,Secondary,Inactive
+Ukraine,Male,Serbian,5,18,No,Mother,Primary,Self-employed,Primary,Unemployed,Secondary,Active
+Hungary,Male,Romanian,19,9,Yes,Mother,Higher,Self-employed,Primary,Unemployed,Secondary,Active
+Hungary,Female,Ukrainian,6,9,Yes,Mother,Primary,Unemployed,Primary,Self-employed,Secondary,Active
+Moldova,Female,Serbian,19,16,Yes,Mother,Higher,Unemployed,Higher,Self-employed,Primary,Active
+Romania,Male,Serbian,19,13,Yes,Guardian,Primary,Self-employed,Primary,Unemployed,Primary,Inactive
+Serbia,Male,Hungarian,18,12,No,Mother,Higher,Unemployed,Higher,Unemployed,Higher,Active
+Hungary,Female,Ukrainian,7,11,No,Father,Secondary,Unemployed,Higher,Self-employed,Higher,Active
+Hungary,Female,Ukrainian,5,14,No,Guardian,Secondary,Unemployed,Higher,Employed,Primary,Active
+Serbia,Male,Hungarian,18,10,No,Guardian,Higher,Unemployed,Higher,Employed,Higher,Active
+Romania,Male,Moldovan,10,18,Yes,Guardian,Primary,Self-employed,Higher,Unemployed,Higher,Active
+Ukraine,Female,Romanian,1,17,No,Mother,Higher,Self-employed,Higher,Unemployed,Higher,Active
+Romania,Female,Moldovan,20,14,Yes,Guardian,Secondary,Employed,Higher,Employed,Primary,Inactive
+Moldova,Female,Ukrainian,10,12,No,Guardian,Primary,Unemployed,Higher,Self-employed,Primary,Active
+Romania,Female,Serbian,18,15,No,Mother,Higher,Self-employed,Primary,Self-employed,Secondary,Inactive
+Hungary,Female,Romanian,8,9,Yes,Mother,Higher,Unemployed,Higher,Employed,Higher,Inactive

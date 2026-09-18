@@ -1,0 +1,21 @@
+birth_country,gender,nacionality,distance_home_school,age,state_support,responsible_person,education_responsible_person,father_employment_status,father_education_level,mother_employment_status,mother_education_level,educational_track,status
+Cape Verde,F,Cape Verde,Short,17,Yes,Other,Master,Employee,Master,Employee,Low Secondary,General,Dropout
+Cape Verde,M,Cape Verde,Short,18,Yes,Mother,Unknown,Employee,Unknown,Domestic (no job),Unknown,Technical,Enrolled
+Portugal,M,Portugal,Moderate,17,Yes,Other,Low Secondary,Unemployed,Low Secondary,Employee,Low Secondary,Technical,Enrolled
+Portugal,M,Portugal,Short,17,Yes,Mother,Low Secondary,Employee,Primary,Unemployed,Low Secondary,General,Enrolled
+Portugal,F,Portugal,Moderate,17,Yes,Mother,Master,Employee,Upper Secondary,Employee,Master,General,Dropout
+Portugal,F,Portugal,Long,18,Yes,Mother,Unknown,Employee,Low Secondary,Domestic (no job),Unknown,General,Dropout
+Portugal,F,Portugal,Short,17,Yes,Mother,Upper Secondary,Employee,Upper Secondary,Business owner,Upper Secondary,General,Dropout
+Portugal,M,Portugal,Moderate,18,Yes,Mother,Master,Employee,Master,Employee,Master,General,Dropout
+Portugal,F,Portugal,Moderate,18,Yes,Mother,Upper Secondary,Employee,Low Secondary,Employee,Upper Secondary,General,Dropout
+Portugal,M,Portugal,Short,19,Yes,Mother,Master,Employee,Master,Unemployed,Master,General,Dropout
+Portugal,M,Portugal,Long,17,Yes,Mother,Master,Unknown,Low Secondary,Unknown,Master,General,Dropout
+Portugal,F,Portugal,Short,17,Yes,Mother,Upper Secondary,Employee,Upper Secondary,Employee,Upper Secondary,General,Dropout
+Brazil,F,Portugal,Short,17,No,Mother,Upper Secondary,Unknown,Unknown,Employee,Upper Secondary,General,Dropout
+Portugal,M,Portugal,Moderate,17,Yes,Mother,Upper Secondary,Unknown,Upper Secondary,Business owner,Upper Secondary,General,Enrolled
+Portugal,M,Portugal,Long,17,Yes,Mother,Upper Secondary,Business owner,Upper Secondary,Domestic (no job),Upper Secondary,Technical,Enrolled
+Portugal,M,Portugal,Moderate,17,Yes,Mother,Upper Secondary,Unknown,Unknown,Employee,Upper Secondary,General,Dropout
+Portugal,F,Portugal,Long,17,No,Other,Low Secondary,Employee,Low Secondary,Employee,Upper Secondary,General,Dropout
+Portugal,F,Portugal,Short,17,No,Mother,Upper Secondary,Employee,Low Secondary,Employee,Upper Secondary,General,Dropout
+Portugal,M,Portugal,Short,17,Yes,Mother,Upper Secondary,Employee,Low Secondary,Employee,Upper Secondary,General,Dropout
+Portugal,M,Portugal,Long,17,Yes,Mother,Upper Secondary,Employee,Low Secondary,Employee,Upper Secondary,General,Enrolled

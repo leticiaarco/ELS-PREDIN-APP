@@ -1,0 +1,29 @@
+schooljaar,grade_year_secondary,outflow_position,gender,belgian_nonbelgian,eu_noneu,age_category,household_language_dutch,mother_education_level,school_progress,grade_secondary_education,school_year_level,field_of_study,residence_merged_municipality_name,residence_province_name,residence_central_city,target
+2022-2023,,buso OV3,Male,Belgian,EU,18-19,,,,,5, (modernisering SO),Westerlo,Antwerpen,No,dropout
+2022-2023,,buso OV3,Male,Belgian,EU,18-19,,,,,5, (modernisering SO),Westerlo,Antwerpen,No,enroll
+2022-2023,3rd Grade - 2nd Year,tso,Female,Belgian,EU,18-19,Ned with no one,Higher education,1 year academic delay,3,2,Trade,Zoutleeuw,Flemish Brabant,No,enroll
+2022-2023,3rd Grade - 2nd Year,bso,Female,Non-Belgian,Non-EU,17-18,Ned with no one,No primary education,No academic delay,3,2,Personal care,Kortrijk,West Flanders,Yes,enroll
+2022-2023,3rd Grade - 1st Year,tso,Female,Belgian,EU,18-19,Ned with at least one,Upper secondary education,2 years academic delay,3,1,Personal care,Antwerpen,Antwerpen,Yes,dropout
+2022-2023,3rd Grade - 2nd Year,bso,Female,Belgian,EU,18-19,Ned with at least one,No primary education,1 year academic delay,3,2,Fashion,Antwerpen,Antwerpen,Yes,enroll
+2022-2023,3rd Grade - 2nd Year,bso,Female,Belgian,EU,18-19,Ned with at least one,No primary education,1 year academic delay,3,2,Fashion,Antwerpen,Antwerpen,Yes,enroll
+2022-2023,3rd Grade - 2nd Year,bso,Male,Belgian,EU,18-19,Exclusively Ned with everyone,Higher education,1 year academic delay,3,2,Trade,Haacht,Flemish Brabant,No,enroll
+2022-2023,3rd Grade - 2nd Year,aso,Male,Belgian,EU,17-18,Ned with no one,Higher education,No academic delay,3,2,General secondary education,Antwerpen,Antwerpen,Yes,enroll
+2022-2023,,dbso,Female,Belgian,EU,19-20,Exclusively Ned with everyone,Lower secondary education,,,/, (modernisering SO),Antwerpen,Antwerpen,Yes,dropout
+2022-2023,,dbso,Female,Belgian,EU,19-20,Exclusively Ned with everyone,Lower secondary education,,,/, (modernisering SO),Antwerpen,Antwerpen,Yes,dropout
+2022-2023,,dbso,Female,Belgian,EU,19-20,Exclusively Ned with everyone,Lower secondary education,,,/, (modernisering SO),Antwerpen,Antwerpen,Yes,enroll
+2022-2023,,dbso,Female,Belgian,EU,19-20,Exclusively Ned with everyone,Lower secondary education,,,/, (modernisering SO),Antwerpen,Antwerpen,Yes,enroll
+2022-2023,3rd Grade - 2nd Year,bso,Male,Non-Belgian,EU,17-18,Exclusively Ned with everyone,Lower secondary education,No academic delay,3,2,Cooling and heating,Maaseik,Limburg,No,enroll
+2022-2023,3rd Grade - 2nd Year,bso,Female,Belgian,EU,18-19,Ned with at least one,Lower secondary education,1 year academic delay,3,2,Personal care,Oudenaarde,East Flanders,No,enroll
+2022-2023,3rd Grade - 2nd Year,bso,Male,Belgian,EU,18-19,Exclusively Ned with everyone,Upper secondary education,1 year academic delay,3,2,Construction,Brugge,West Flanders,Yes,enroll
+2022-2023,3rd Grade - 2nd Year,bso,Male,Belgian,EU,18-19,Exclusively Ned with everyone,Upper secondary education,1 year academic delay,3,2,Construction,Brugge,West Flanders,Yes,enroll
+2022-2023,3rd Grade - 2nd Year,bso,Male,Belgian,EU,18-19,Exclusively Ned with everyone,Upper secondary education,1 year academic delay,3,2,Construction,Brugge,West Flanders,Yes,enroll
+2022-2023,3rd Grade - 2nd Year,tso,Male,Belgian,EU,17-18,Exclusively Ned with everyone,Upper secondary education,No academic delay,3,2,Mechanics-electricity,Kalmthout,Antwerpen,No,enroll
+2022-2023,3rd Grade - 2nd Year,tso,Male,Belgian,EU,17-18,Exclusively Ned with everyone,Upper secondary education,No academic delay,3,2,Mechanics-electricity,Kalmthout,Antwerpen,No,enroll
+2022-2023,3rd Grade - 2nd Year,tso,Male,Belgian,EU,17-18,Exclusively Ned with everyone,Upper secondary education,No academic delay,3,2,Mechanics-electricity,Kalmthout,Antwerpen,No,enroll
+2022-2023,3rd Grade - 2nd Year,tso,Male,Belgian,EU,17-18,Exclusively Ned with everyone,Upper secondary education,No academic delay,3,2,Mechanics-electricity,Kalmthout,Antwerpen,No,enroll
+2022-2023,3rd Grade - 2nd Year,tso,Male,Belgian,EU,17-18,Exclusively Ned with everyone,Upper secondary education,No academic delay,3,2,Mechanics-electricity,Kalmthout,Antwerpen,No,enroll
+2022-2023,3rd Grade - 1st Year,bso,Male,Belgian,EU,18-19,Ned with at least one,Lower secondary education,2 years academic delay,3,1,Trade,Aalst,East Flanders,Yes,dropout
+2022-2023,3rd Grade - 2nd Year,bso,Female,Belgian,EU,18-19,Ned with at least one,Lower secondary education,1 year academic delay,3,2,Personal care,Denderleeuw,East Flanders,No,enroll
+2022-2023,3rd Grade - 2nd Year,bso,Female,Belgian,EU,17-18,Exclusively Ned with everyone,Upper secondary education,No academic delay,3,2,Body care,Sint-Truiden,Limburg,No,enroll
+2022-2023,3rd Grade - 2nd Year,tso,Male,Belgian,EU,18-19,Ned with no one,Higher education,1 year academic delay,3,2,Chemistry,Brugge,West Flanders,Yes,enroll
+2022-2023,3rd Grade - 2nd Year,tso,Female,Belgian,EU,17-18,Exclusively Ned with everyone,Upper secondary education,No academic delay,3,2,Personal care,Geraardsbergen,East Flanders,No,dropout
